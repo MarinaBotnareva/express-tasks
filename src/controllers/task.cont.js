@@ -4,15 +4,20 @@ class TaskController {
 
   async getTasks(req, res, next) {
     try {
-      const limit = Number(req.query.rows);
-      const page = Number(req.query.page);
-      const offset = Math.floor((page - 1) * limit);    
-      
-      const tasks = await taskService.getTasks(limit, offset);
+      const tasks = await taskService.getTasks();
       res.status(200).send({ data: tasks });
     } catch (error) {
         next(error);
     }
+}
+
+async getTask(req, res, next) {
+  try {
+    const task = await taskService.getTask(Number(req.params.id));
+    res.status(200).send({ data: task });
+  } catch (error) {
+      next(error);
+  }
 }
 
   async createTask(req, res, next) {

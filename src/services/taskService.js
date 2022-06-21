@@ -3,8 +3,16 @@ const createHttpError = require("http-errors");
 let nextId = 1;
 const tasksDB = [{ id: 0 }];
 
-module.exports.getTasks = async (limit, offset) => {
-  return tasksDB.slice(offset, offset + limit);
+module.exports.getTasks = async () => {
+  return tasksDB;
+}
+
+module.exports.getTask = async (id) => {
+  const foundTaskIdx = tasksDB.findIndex((task) => task.id === id)
+  if(foundTaskIdx === -1) {
+    throw createHttpError(404, 'Task not found');
+  }
+  return tasksDB[foundTaskIdx];
 }
 
 module.exports.createTask = async (data) => {
