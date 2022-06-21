@@ -8,7 +8,7 @@ taskRouter.get('/:id/get', getByIdValidation, taskController.getTasks);
 
 taskRouter.delete('/:id', taskController.deleteTask);
 
-taskRouter.post('/create', taskCreateMW, taskController.createTask);
+taskRouter.post('/', taskCreateMW, taskController.createTask);
 
 taskRouter.patch('/:id', taskUpdateMW, taskController.updateTask);
 

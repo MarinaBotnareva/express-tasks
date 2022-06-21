@@ -1,7 +1,7 @@
 let nextId = 1;
 const tasksDB = [{ id: 0 }];
 
-module.exports.createHero = async (data) => {
+module.exports.createTask = async (data) => {
   const newTask = { ...data, id: nextId++ };
   tasksDB.push(newTask);
 

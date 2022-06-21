@@ -1,5 +1,4 @@
-const createError = require("http-errors");
-const heroService = require('../services/taskService.js');
+const taskService = require('../services/taskService.js');
 
 class TaskController {
 
@@ -14,14 +13,15 @@ class TaskController {
 
   async createTask(req, res, next) {
     try {
-      const data = { ...req.body, body: req.params.body, isDone: req.params.isDone, userId: req.params.userId };
+      console.log(req.body)
+      const data = { ...req.body, body: req.body.body, isDone: req.body.isDone, userId: req.body.userId };
 
       const newTask = await taskService.createTask(data);
 
       res.status(200).send({ data: newTask });
     } catch (error) {
       next(error);
-    }Hero
+    }
   }
 
   async updateTask(req, res, next) {
