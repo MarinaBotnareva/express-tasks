@@ -26,15 +26,10 @@ class TaskController {
 
   async updateTask(req, res, next) {
     try {
-      const {
-        body,
-        params: { id }, 
-        query: {}, 
-      } = req;
+     
+      const data = { ...req.body, body: req.body.body, isDone: req.body.isDone, userId: req.body.userId };
 
-      const data = { ...body };
-
-      const updatedTask = await taskService.updateTask(Number(id), data);
+      const updatedTask = await taskService.updateTask(Number(req.params.id), data);
 
       res.send({ data: updatedTask });
     } catch (error) {
