@@ -3,9 +3,13 @@ const taskService = require('../services/taskService.js');
 class TaskController {
 
   async getTasks(req, res, next) {
-    try {    
+    try {
+      const limit = Number(req.query.rows);
+      const page = Number(req.query.page);
+      const offset = Math.floor((page - 1) * limit);    
       
-      res.status(200).send({ id: req.params.id });
+      const tasks = await taskService.getTasks(limit, offset);
+      res.status(200).send({ data: tasks });
     } catch (error) {
         next(error);
     }
@@ -14,7 +18,7 @@ class TaskController {
   async createTask(req, res, next) {
     try {
       console.log(req.body)
-      const data = { ...req.body, body: req.body.body, isDone: req.body.isDone, userId: req.body.userId };
+      const data = { ...req.body };
 
       const newTask = await taskService.createTask(data);
 
@@ -27,7 +31,7 @@ class TaskController {
   async updateTask(req, res, next) {
     try {
      
-      const data = { ...req.body, body: req.body.body, isDone: req.body.isDone, userId: req.body.userId };
+      const data = { ...req.body };
 
       const updatedTask = await taskService.updateTask(Number(req.params.id), data);
 
@@ -42,7 +46,7 @@ class TaskController {
  
       const deletedTask = await taskService.deleteTask(Number(req.params.id ));
 
-      res.send({ id: deletedTask });
+      res.send({ data: deletedTask });
     } catch (error) {
         next(error);
     }
